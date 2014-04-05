@@ -10,11 +10,10 @@ import java.util.Scanner;
 /**
  * Only working with single windows commands so far as I know unfortunately
  * 
- * But also nice shit since the output of an "ipconfig" for example looks much
- * prettier than in the 2nd solution
  * @author Alex
  *
  */
+@Deprecated
 public class ConsoleExecutorType1 {
 	public static void main(String[] args) throws IOException {
 		try {

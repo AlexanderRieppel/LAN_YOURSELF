@@ -1,7 +1,9 @@
 package gui;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.Scanner;
 
@@ -51,13 +53,17 @@ public class ConsoleExecutorType2 {
 		} catch (IOException e) {
 			System.out.println(e);
 		}
-
+		
 		// write stdout of shell (=output of all commands)
-		Scanner s = new Scanner(p.getInputStream());
-		while (s.hasNext()) {
-				System.out.println(s.next());
-			
+		String s;
+        System.err.println("Standard output: ");
+		BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
+		try {
+			while ((s = stdInput.readLine()) != null) {
+				System.out.println(s);
+			}
+		} catch (IOException e) {
+			System.out.println(e);
 		}
-		s.close();
 	}
 }
