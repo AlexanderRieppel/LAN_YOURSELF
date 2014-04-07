@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 public class MainGUI extends JFrame {
 	private JTextField textField_1;
 	private JTextField textField_3;
-	private JTextField textField_2;
+	public JTextField textField_2;
 	private JPanel panel_1,panel_2,panel_3;
 	public MainGUI() {
 		getContentPane().setLayout(new GridLayout(4, 1, 0, 0));
