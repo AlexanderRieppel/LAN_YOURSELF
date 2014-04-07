@@ -22,8 +22,13 @@ public class ConfigEditor {
 	public void readAll(){
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(this.file));
-			while(reader.ready())
-				this.content += reader.readLine() + "\n";
+			this.content = "";
+			while(reader.ready()){
+				String line = reader.readLine();
+//				System.out.println(line);
+				if(line != null)
+					this.content += line + "\n";
+			}
 			reader.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -34,23 +39,42 @@ public class ConfigEditor {
 	
 	public String get(String key){
 		if(this.content.contains(key)){
-			int first = this.content.indexOf(key);
-			int secound = this.content.indexOf(" = ",first);
+			int eins = this.content.indexOf(key);
+			int zwei = this.content.indexOf(" = ",eins);
 			String temp = "";
-			for(int i = secound+3; this.content.charAt(i) != '\n' ; i++){
+			for(int i = zwei+3; this.content.charAt(i) != '\n' ; i++){
 				temp += this.content.charAt(i);
 			}
 			return temp;
 		}else
 			return null;
 	}
-	
+	public void set(String key, String value){
+		String[] args = this.content.split("\n");
+		boolean found = false;
+		for(int i = 0; i < args.length;i++){
+			if(args[i].contains(key)){
+				args[i] = args[i].replaceAll(this.get(key), value);
+				found = true;
+				break;
+			}
+		}
+		String temp = "";
+		for(int i = 0; i < args.length;i++)
+			if(args[i] != null)
+				temp += args[i] + "\n";
+		
+		this.content = temp;
+		if(!found)
+			this.content = key + " = " + value + "\n" + this.content;
+	}
 	public void writeAll(){
 		try{
 			file.delete();
 			file.createNewFile();
 			FileOutputStream fos = new FileOutputStream(this.file);
 			fos.write(this.content.getBytes());
+			fos.close();
 		}catch(IOException e){
 			e.printStackTrace();
 		}

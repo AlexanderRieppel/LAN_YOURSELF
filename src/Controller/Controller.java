@@ -34,7 +34,9 @@ public class Controller {
 		try {
 			ConfigEditor e = new ConfigEditor("tinc.conf");
 			e.readAll();
-			System.out.println(e.get("Interface"));
+			System.out.println(e.get("Subnet"));
+			e.set("Name", "Alex");
+			e.writeAll();
 		} catch (NoSuchFile e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
