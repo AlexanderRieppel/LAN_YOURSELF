@@ -5,7 +5,10 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.URL;
 import java.util.Scanner;
+
+import javax.tools.JavaFileManager.Location;
 
 /**
  * Also works with tinc.exe CLI xD
@@ -20,7 +23,9 @@ import java.util.Scanner;
 public class ConsoleExecutorType2 {
 	public static void main(String[] args) {
 		// init shell
-		ProcessBuilder builder = new ProcessBuilder("C:/Windows/System32/cmd.exe");
+		System.out.println(System.getenv("windir"));
+		ProcessBuilder builder = new ProcessBuilder(System.getenv("windir")+"/System32/cmd.exe");
+		System.out.println();
 		Process p = null;
 		try {
 			p = builder.start();
@@ -38,9 +43,9 @@ public class ConsoleExecutorType2 {
 			p_stdin.write("D:\\Other\\tinc\\tinc.exe");
 			p_stdin.newLine();
 			p_stdin.flush();
-			p_stdin.write("init Alex");
-			p_stdin.newLine();
-			p_stdin.flush();
+//			p_stdin.write("init Alex");
+//			p_stdin.newLine();
+//			p_stdin.flush();
 		} catch (IOException e) {
 			System.out.println(e);
 		}
