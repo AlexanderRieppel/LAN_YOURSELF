@@ -79,6 +79,15 @@ public class MyPanel extends JPanel{
 						File f = new File("tinc.conf");
 						if(f.exists())
 							f.delete();
+						f = new File("ecdsa_key.priv");
+						if(f.exists())
+							f.delete();
+						f = new File("rsa_key.priv");
+						if(f.exists())
+							f.delete();
+						f = new File("hosts/"+name);
+						if(f.exists())
+							f.delete();
 						CLI2.init(name);
 						new Thread(new Runnable() {
 							
