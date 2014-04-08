@@ -17,9 +17,11 @@ import java.util.Scanner;
  * @author Alex
  *
  */
-public class CET2 {
+public class CLI2 {
+	private static String TINC_PATH = "D:\\Other\\tinc\\tinc.exe";
+	private static String WIN_PATH = System.getenv("windir")+"/System32/cmd.exe";
 	public static boolean init(String name){
-		ProcessBuilder builder = new ProcessBuilder("C:/Windows/System32/cmd.exe");
+		ProcessBuilder builder = new ProcessBuilder(WIN_PATH);
 		Process p = null;
 		try {
 			p = builder.start();
@@ -34,10 +36,13 @@ public class CET2 {
 		// for (int i=0; i<n; i++) {
 		try {
 			// single execution
-			p_stdin.write("D:\\Other\\tinc\\tinc.exe");
+			p_stdin.write(TINC_PATH);
 			p_stdin.newLine();
 			p_stdin.flush();
 			p_stdin.write("init "+name);
+			p_stdin.newLine();
+			p_stdin.flush();
+			p_stdin.write("exit");
 			p_stdin.newLine();
 			p_stdin.flush();
 			return true;
@@ -48,7 +53,7 @@ public class CET2 {
 		
 	}
 	public static boolean start(){
-		ProcessBuilder builder = new ProcessBuilder("C:/Windows/System32/cmd.exe");
+		ProcessBuilder builder = new ProcessBuilder(WIN_PATH);
 		Process p = null;
 		try {
 			p = builder.start();
@@ -63,7 +68,7 @@ public class CET2 {
 		// for (int i=0; i<n; i++) {
 		try {
 			// single execution
-			p_stdin.write("D:\\Other\\tinc\\tinc.exe");
+			p_stdin.write(TINC_PATH);
 			p_stdin.newLine();
 			p_stdin.flush();
 			p_stdin.write("start");
@@ -77,7 +82,7 @@ public class CET2 {
 		
 	}
 	public static boolean restart(){
-		ProcessBuilder builder = new ProcessBuilder("C:/Windows/System32/cmd.exe");
+		ProcessBuilder builder = new ProcessBuilder(WIN_PATH);
 		Process p = null;
 		try {
 			p = builder.start();
@@ -92,7 +97,7 @@ public class CET2 {
 		// for (int i=0; i<n; i++) {
 		try {
 			// single execution
-			p_stdin.write("D:\\Other\\tinc\\tinc.exe");
+			p_stdin.write(TINC_PATH);
 			p_stdin.newLine();
 			p_stdin.flush();
 			p_stdin.write("restart");
@@ -106,7 +111,7 @@ public class CET2 {
 		
 	}
 	public static boolean stop(){
-		ProcessBuilder builder = new ProcessBuilder("C:/Windows/System32/cmd.exe");
+		ProcessBuilder builder = new ProcessBuilder(WIN_PATH);
 		Process p = null;
 		try {
 			p = builder.start();
@@ -121,7 +126,7 @@ public class CET2 {
 		// for (int i=0; i<n; i++) {
 		try {
 			// single execution
-			p_stdin.write("D:\\Other\\tinc\\tinc.exe");
+			p_stdin.write(TINC_PATH);
 			p_stdin.newLine();
 			p_stdin.flush();
 			p_stdin.write("stop");
