@@ -14,17 +14,14 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Properties;
 
-import Verbindung.ClientInterface;
-import Verbindung.Reciever;
-import Verbindung.ServerInterface;
+
 import sun.misc.Cleaner;
 import ConfigEditor.ConfigEditor;
 import ConfigEditor.NoSuchFile;
 import ConfigEditor.WrongArgument;
 
-public class Controller implements Reciever{
-	private ArrayList<ClientInterface> clients = new ArrayList<ClientInterface>();
-	private ServerInterface server;
+public class Controller{
+	
 	
 	public static void main(String[] args) {
 		new Controller();
@@ -67,23 +64,7 @@ public class Controller implements Reciever{
 			mg.textField_2.setText(ip);
 			new MyFrame(mg, "Test GUI", true);
 			//Server Starten
-			server = null;
-			if(server != null)
-				server.open();
 		}
 		
 	}
-	
-	
-	@Override
-	public void handle(Object o) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void addClient(Socket s) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }
