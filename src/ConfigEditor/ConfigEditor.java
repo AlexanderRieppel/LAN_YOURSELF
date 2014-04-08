@@ -122,7 +122,7 @@ public class ConfigEditor {
 		
 		this.content = temp;
 		if(!found)
-			this.content = key + " = " + value + "\n" + this.content;
+			this.content = key + " = " + value + "\n\n" + this.content;
 	}
 	public void writeAll(){
 		try{
