@@ -2,6 +2,7 @@ package interfaces;
 
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.Properties;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -33,8 +34,8 @@ public class CommunicationFactory {
 	 * Creates a new Message to be sent
 	 * @return
 	 */
-	public static LysMessage newMessage(String destination, String source){
-		return null;//TODO Make message
+	public static LysMessage newMessage(String destination, String source, Properties options, String text, Object load){
+		return new LysMessageV1(destination, source, options, text, load, null);
 	}
 	/**
 	 * Creates a new remtoeClient from a Socket

@@ -53,7 +53,7 @@ public class CommunicatorV1 implements Communicator {
 		
 	}
 	/**
-	 * Closes all connection nice
+	 * Closes all connections nice
 	 */
 	
 	@Override
