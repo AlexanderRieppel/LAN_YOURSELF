@@ -2,11 +2,20 @@ package gui;
 
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import ConfigEditor.ConfigEditor;
+import ConfigEditor.NoSuchFile;
+import ConfigEditor.WrongArgument;
+import Controller.CLI2;
 
 public class MyPanel extends JPanel{
 	private JTextField textField_1;
@@ -38,6 +47,7 @@ public class MyPanel extends JPanel{
 		textField_3 = new JTextField();
 		panel_1.add(textField_3);
 		textField_3.setColumns(10);
+		textField_3.setText("");
 		
 		panel_2 = new JPanel();
 		add(panel_2);
@@ -55,5 +65,75 @@ public class MyPanel extends JPanel{
 		
 		JButton btnConnect = new JButton("Connect");
 		panel_3.add(btnConnect);
+		btnConnect.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println(CLI2.TINC_PATH);
+				final String to = textField_1.getText();
+				final String name = textField_3.getText();
+				final String publicip = textField_2.getText();
+				if(to != null && name != null && publicip != null){
+					if(name != "" && publicip != ""){
+//						CLI2.stop();
+						File f = new File("tinc.conf");
+						if(f.exists())
+							f.delete();
+						CLI2.init(name);
+						new Thread(new Runnable() {
+							
+							@Override
+							public void run() {
+								try {
+									Thread.sleep(1000);
+								} catch (InterruptedException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+								try {
+									ConfigEditor conf = new ConfigEditor("tinc.conf");
+									conf.readAll();
+									conf.set("port", CLI2.Port);
+									conf.set("Interface", CLI2.Interface);
+									conf.set("ExperimentalProtocol","no");
+//									System.out.println("totest:"+to+"ENDTOTEST");
+									if(!to.equalsIgnoreCase("")){
+//										System.out.println("TOOTO");
+										ArrayList<String> tt = new ArrayList<String>();
+										tt.add(to);
+										conf.addConections(tt);
+									}
+									conf.writeAll();
+								} catch (NoSuchFile e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (WrongArgument e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								try {
+									ConfigEditor conf = new ConfigEditor("hosts/"+name);
+									conf.readAll();
+									conf.set("port", CLI2.Port);
+									conf.set("Subnet", CLI2.IP);
+									conf.set("Address",publicip);
+									conf.writeAll();
+								} catch (NoSuchFile e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (WrongArgument e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								//VPN starten
+								System.out.println(CLI2.start());
+								System.out.println("VPN gestartet!");
+							}
+						}).start();
+						
+					}
+				}
+			}
+		});
 	}
 }

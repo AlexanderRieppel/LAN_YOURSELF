@@ -18,8 +18,11 @@ import java.util.Scanner;
  *
  */
 public class CLI2 {
-	private static String TINC_PATH = "D:\\Other\\tinc\\tinc.exe";
+	public static String TINC_PATH = "D:\\Other\\tinc\\tinc.exe";
 	private static String WIN_PATH = System.getenv("windir")+"/System32/cmd.exe";
+	public static String IP = "10.168.0.1/32";
+	public static String Interface = "test";
+	public static String Port = "25565";
 	public static boolean init(String name){
 		ProcessBuilder builder = new ProcessBuilder(WIN_PATH);
 		Process p = null;
