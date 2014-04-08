@@ -1,8 +1,9 @@
 package interfaces;
 
+import java.io.Serializable;
 import java.util.Properties;
 
-public interface LysMessage {
+public interface LysMessage extends Serializable{
 	public String getDest();
 	public String getSource();
 	public boolean isEncrypted();
