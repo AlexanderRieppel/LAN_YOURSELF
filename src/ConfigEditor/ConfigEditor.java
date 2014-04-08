@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ConfigEditor {
 	private String path;
@@ -38,6 +39,8 @@ public class ConfigEditor {
 	}
 	
 	public String get(String key){
+		if(key.equalsIgnoreCase("ConnectTo"))
+			return null;
 		if(this.content.contains(key)){
 			int eins = this.content.indexOf(key);
 			int zwei = this.content.indexOf(" = ",eins);
@@ -49,7 +52,60 @@ public class ConfigEditor {
 		}else
 			return null;
 	}
-	public void set(String key, String value){
+	public void remove(String key){
+		if(this.content.contains(key)){
+			int eins = this.content.indexOf(key);
+			String temp = "";
+			for(int i = eins; this.content.charAt(i) != '\n' ; i++){
+				temp += this.content.charAt(i);
+			}
+			this.content = this.content.replaceFirst(temp + "\n", "");
+		}
+	}
+	public ArrayList<String> getConnections(){
+		String key = "ConnectTo";
+		ArrayList<String> returns = new ArrayList<String>();
+		if(this.content.contains(key)){
+			int eins = 0;
+			int zwei = 0;
+			while(eins >= 0){
+				eins = this.content.indexOf(key,zwei);
+				zwei = this.content.indexOf(" = ",eins);
+				if(eins != -1){
+					String temp = "";
+					for(int i = zwei+3; this.content.charAt(i) != '\n' ; i++){
+						temp += this.content.charAt(i);
+					}
+					returns.add(temp);
+				}
+//				System.out.println(eins);
+			}
+			return returns;
+		}else
+			return null;
+	}
+	public void addConections(ArrayList<String> neu){
+		for(String temp : neu){
+			this.content = "ConnectTo = " + temp + "\n" + this.content; 
+		}
+	}
+	public void removeConections(ArrayList<String> rem){
+		for(String temp : rem){
+			if(this.content.contains(temp)){
+				String[] args = this.content.split("\n");
+				for(int i = 0; i < args.length;i++)
+					if(args[i].contains(temp))
+						args[i] = "";
+				this.content = "";
+				for(String t :  args)
+					if(t != "")
+						this.content += t + "\n";
+			}
+		}
+	}
+	public void set(String key, String value) throws WrongArgument{
+		if(key.equalsIgnoreCase("ConnectTo"))
+			throw new WrongArgument();
 		String[] args = this.content.split("\n");
 		boolean found = false;
 		for(int i = 0; i < args.length;i++){
