@@ -11,12 +11,14 @@ class ServerCommunicator extends ServerInterface  {
 	private ArrayList<HashMap<String, RemoteClient>> observer;
 	private LinkedBlockingQueue<LysMessage> messageQueue;
 	private ServerSocket ss;
+	private String localeNodeName;
 	private boolean go;
 	
-	protected ServerCommunicator(LinkedBlockingQueue<LysMessage> messageQueue){
+	protected ServerCommunicator(LinkedBlockingQueue<LysMessage> messageQueue, String localeNodeName){
 		go= false;
 		this.messageQueue = messageQueue;
 		observer = new ArrayList<HashMap<String, RemoteClient>>();
+		this.localeNodeName=localeNodeName;
 		
 	}
 
@@ -45,7 +47,8 @@ class ServerCommunicator extends ServerInterface  {
 			}
 		while(go){
 		try {
-			newClient(CommunicationFactory.newClient(ss.accept(), "test"+(int)(Math.random()*1000), messageQueue));
+			newClient(CommunicationFactory.newClient(ss.accept(), messageQueue,localeNodeName));
+			System.out.println("New client");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

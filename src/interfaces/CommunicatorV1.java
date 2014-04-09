@@ -1,10 +1,12 @@
 package interfaces;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map.Entry;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -14,6 +16,7 @@ public class CommunicatorV1 implements Communicator {
 	private ServerInterface si;
 	
 	protected CommunicatorV1 (ServerInterface si, HashMap<String,RemoteClient> clientMap,LinkedBlockingQueue<LysMessage> messageQueue){
+	
 		this.si = si;
 		this.messageQueue = messageQueue;
 		this.clientMap = clientMap;
@@ -35,7 +38,7 @@ public class CommunicatorV1 implements Communicator {
 	 */
 	@Override
 	public boolean addClient(RemoteClient rc) {
-		clientMap.put(rc.getNodeName(),rc);
+		addClientWithoutMessageQueue(rc);
 		return true;
 	}
 
@@ -51,6 +54,12 @@ public class CommunicatorV1 implements Communicator {
 	 */
 	public boolean addClientWithoutMessageQueue(RemoteClient rc) {
 		rc.setMessageQueue(messageQueue);
+		try {
+			rc.open();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		clientMap.put(rc.getNodeName(),rc);
 		return true;
 	}
@@ -82,6 +91,17 @@ public class CommunicatorV1 implements Communicator {
 			i.next().close();
 		}
 		return true;
+	}
+
+	@Override
+	public RemoteClient getClientByIP(InetAddress ia) {
+		Iterator<RemoteClient> i = clientMap.values().iterator();
+		while(i.hasNext()){
+			RemoteClient rc = i.next();
+			if(rc.getInetAddress()==ia)
+				return rc;
+		}
+		return null;
 	}
 
 }

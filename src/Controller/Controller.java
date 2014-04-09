@@ -3,6 +3,8 @@ package Controller;
 import gui.MainGUI;
 import gui.MyFrame;
 import gui.MyPanel;
+import interfaces.CommunicationFactory;
+import interfaces.Communicator;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -14,14 +16,14 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Properties;
 
-
 import sun.misc.Cleaner;
 import ConfigEditor.ConfigEditor;
 import ConfigEditor.NoSuchFile;
 import ConfigEditor.WrongArgument;
 
 public class Controller{
-	
+	private Communicator commu;
+	private boolean server;
 	
 	public static void main(String[] args) {
 		new Controller();
@@ -45,6 +47,7 @@ public class Controller{
 			FileInputStream fis = new FileInputStream("config.properties");
 			Properties prop = new Properties();
 			prop.load(fis);
+			fis.close();
 			CLI2.TINC_PATH = (String)prop.get("path");
 			CLI2.IP = (String)prop.get("ip");
 			CLI2.Interface = (String)prop.get("Interface");
@@ -60,11 +63,22 @@ public class Controller{
 		String ip = getPublicIP(url);
 		if(ip != null){
 			System.out.println(ip);
-			MyPanel mg = new MyPanel();
+			MyPanel mg = new MyPanel(this);
 			mg.textField_2.setText(ip);
 			new MyFrame(mg, "Test GUI", true);
-			//Server Starten
+			
 		}
-		
+	}
+	public Communicator getCommu(){
+		return commu;
+	}
+	public void setCommu(Communicator commu){
+		this.commu = commu;
+	}
+	public void setServer(boolean nn){
+		this.server = nn;
+	}
+	public boolean getServer(){
+		return this.server;
 	}
 }

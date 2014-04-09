@@ -1,6 +1,7 @@
 package interfaces;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -15,5 +16,6 @@ public interface RemoteClient{
 	public void setMessageQueue(LinkedBlockingQueue<LysMessage> messageQueue);
 	public LysMessage getmessage() throws InterruptedException;
 	public String getNodeName();
+	public InetAddress getInetAddress();
 	//Weiterleiten an handleInput
 }

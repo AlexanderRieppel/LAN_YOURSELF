@@ -1,6 +1,7 @@
 package interfaces;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.HashMap;
 /**
@@ -17,5 +18,6 @@ public interface Communicator {
 	public RemoteClient getClient (String client);
 	HashMap<String, RemoteClient> getClientMap();
 	public boolean shutdown();
+	public RemoteClient getClientByIP(InetAddress ia);
 	
 }

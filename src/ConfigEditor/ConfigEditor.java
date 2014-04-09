@@ -135,4 +135,7 @@ public class ConfigEditor {
 			e.printStackTrace();
 		}
 	}
+	public String getContent(){
+		return this.content;
+	}
 }
