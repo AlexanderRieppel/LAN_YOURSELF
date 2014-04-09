@@ -29,13 +29,31 @@ public class CommunicatorV1 implements Communicator {
 	public LysMessage getMessage() throws InterruptedException {
 		return messageQueue.take();
 	}
-
+	
+	/**
+	 * Adds an Client to the intern Clientmap
+	 */
 	@Override
 	public boolean addClient(RemoteClient rc) {
 		clientMap.put(rc.getNodeName(),rc);
 		return true;
 	}
 
+	/**
+	 * Adds an Client but sets the MessageQueue of the Cleint to the MessageQueue of this Communicator
+	 * Use this if you have no clue how this package works
+	 * addClientWithoutMessageQueue
+	 * @param rc RemoteClient
+	 * @return Successstate
+	 *
+	 * @author Thomas Traxler
+	 * @version 09.04.2014
+	 */
+	public boolean addClientWithoutMessageQueue(RemoteClient rc) {
+		rc.setMessageQueue(messageQueue);
+		clientMap.put(rc.getNodeName(),rc);
+		return true;
+	}
 	@Override
 	public HashMap<String,RemoteClient> getClientMap() {
 		

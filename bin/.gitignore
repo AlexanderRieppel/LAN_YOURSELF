@@ -1,6 +1,4 @@
-/gui
-/Controller
 /ConfigEditor
-/Verbindung
-/Interfaces
+/Controller
+/gui
 /interfaces
