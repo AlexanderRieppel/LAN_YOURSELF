@@ -24,11 +24,11 @@ public class CommunicationFactory {
 	 * Returns a new Communicator who is in Charge for the whole communication between the nodes
 	 * @return
 	 */
-	public static Communicator makeCommunicator (String localeNodeName){
+	public static Communicator makeCommunicator (String localeNodeName, Properties p){
 		//if(comm == null){
 		HashMap<String,RemoteClient> clientMap = new  HashMap<String,RemoteClient> ();
 		LinkedBlockingQueue<LysMessage> messageQueue = new LinkedBlockingQueue<LysMessage>();
-		ServerCommunicator sc = new ServerCommunicator(messageQueue,localeNodeName);
+		ServerCommunicator sc = new ServerCommunicator(messageQueue,localeNodeName,p);
 		sc.addObserverList(clientMap);
 		sc.start();
 		 CommunicatorV1 comm = new CommunicatorV1(sc,clientMap, messageQueue);

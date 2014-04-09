@@ -17,7 +17,7 @@ public interface Communicator {
 	public boolean addClient(RemoteClient rc);
 	public RemoteClient getClient (String client);
 	HashMap<String, RemoteClient> getClientMap();
-	public boolean shutdown();
+	public boolean shutdown() throws IOException;
 	public RemoteClient getClientByIP(InetAddress ia);
 	
 }

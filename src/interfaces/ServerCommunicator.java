@@ -5,6 +5,7 @@ import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Properties;
 import java.util.concurrent.LinkedBlockingQueue;
 
 class ServerCommunicator extends ServerInterface  {
@@ -13,8 +14,9 @@ class ServerCommunicator extends ServerInterface  {
 	private ServerSocket ss;
 	private String localeNodeName;
 	private boolean go;
+	private Properties properties;
 	
-	protected ServerCommunicator(LinkedBlockingQueue<LysMessage> messageQueue, String localeNodeName){
+	protected ServerCommunicator(LinkedBlockingQueue<LysMessage> messageQueue, String localeNodeName, Properties p){
 		go= false;
 		this.messageQueue = messageQueue;
 		observer = new ArrayList<HashMap<String, RemoteClient>>();
@@ -25,14 +27,15 @@ class ServerCommunicator extends ServerInterface  {
 	@Override
 	public void open() throws IOException {
 		
-		ss = new ServerSocket(25566);//TODO Make dynamic
+		ss = new ServerSocket(Integer.parseInt(properties.getProperty("javaport")));//TODO Make dynamic
 
 		go=true;
 	}
 
 	@Override
-	public void close() {
-		// TODO Auto-generated method stub
+	public void close() throws IOException {
+		ss.close();
+		go=false;
 
 	}
 

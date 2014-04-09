@@ -7,6 +7,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class RemoteClientV1 implements RemoteClient {
@@ -43,8 +44,11 @@ public class RemoteClientV1 implements RemoteClient {
 	}
 
 	@Override
-	public void close() {
-		// TODO Auto-generated method stub
+	public void close() throws IOException {
+		r.close();
+		oos.close();
+		ois.close();
+		open=false;
 
 	}
 
@@ -98,13 +102,19 @@ public class RemoteClientV1 implements RemoteClient {
 						messageQueue.add((LysMessage) o);
 						System.out.println(""+o.toString());
 					}
-				} catch (ClassNotFoundException | IOException e) {
+				} catch (SocketException se){
+					stop=true;
+				}catch (ClassNotFoundException | IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				
 			}
 			
+		}
+		
+		public void close(){
+			stop=true;
 		}
 		
 	}

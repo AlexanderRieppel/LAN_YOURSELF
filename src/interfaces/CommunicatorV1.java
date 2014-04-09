@@ -81,10 +81,11 @@ public class CommunicatorV1 implements Communicator {
 	}
 	/**
 	 * Closes all connections nice
+	 * @throws IOException 
 	 */
 	
 	@Override
-	public boolean shutdown() {
+	public boolean shutdown() throws IOException {
 		si.close();
 		Iterator<RemoteClient> i = clientMap.values().iterator();
 		while (i.hasNext()){
