@@ -1,8 +1,8 @@
 package Controller;
 
-import gui.MainGUI;
+import gui.MainPanel;
 import gui.MyFrame;
-import gui.MyPanel;
+import gui.MyMenu;
 import interfaces.CommunicationFactory;
 import interfaces.Communicator;
 
@@ -15,6 +15,7 @@ import java.net.Socket;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Properties;
+import java.util.Vector;
 
 import sun.misc.Cleaner;
 import ConfigEditor.ConfigEditor;
@@ -24,6 +25,7 @@ import ConfigEditor.WrongArgument;
 public class Controller{
 	private Communicator commu;
 	private boolean server;
+	private Vector<User> v = new Vector<User>();
 	
 	public static void main(String[] args) {
 		new Controller();
@@ -43,31 +45,37 @@ public class Controller{
 	}
 	
 	public Controller(){
-		try {
-			FileInputStream fis = new FileInputStream("config.properties");
-			Properties prop = new Properties();
-			prop.load(fis);
-			fis.close();
-			CLI2.TINC_PATH = (String)prop.get("path");
-			CLI2.IP = (String)prop.get("ip");
-			CLI2.Interface = (String)prop.get("Interface");
-			CLI2.Port = (String)prop.get("Port");
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		String url = "http://checkip.amazonaws.com";
-		String ip = getPublicIP(url);
-		if(ip != null){
-			System.out.println(ip);
-			MyPanel mg = new MyPanel(this);
-			mg.textField_2.setText(ip);
-			new MyFrame(mg, "Test GUI", true);
-			
-		}
+		MainPanel mg = new MainPanel(this);
+		mg.setListData(v);
+		
+		MyMenu m = new MyMenu(this);
+		
+		new MyFrame(mg,m, "Test GUI", true);
+//		try {
+//			FileInputStream fis = new FileInputStream("config.properties");
+//			Properties prop = new Properties();
+//			prop.load(fis);
+//			fis.close();
+//			CLI2.TINC_PATH = (String)prop.get("path");
+//			CLI2.IP = (String)prop.get("ip");
+//			CLI2.Interface = (String)prop.get("Interface");
+//			CLI2.Port = (String)prop.get("Port");
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		String url = "http://checkip.amazonaws.com";
+//		String ip = getPublicIP(url);
+//		if(ip != null){
+//			System.out.println(ip);
+//			MyPanel mg = new MyPanel(this);
+//			mg.textField_2.setText(ip);
+//			new MyFrame(mg, "Test GUI", true);
+//			
+//		}
 	}
 	public Communicator getCommu(){
 		return commu;

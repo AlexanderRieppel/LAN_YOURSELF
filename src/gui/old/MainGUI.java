@@ -1,4 +1,4 @@
-package gui;
+package gui.old;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
