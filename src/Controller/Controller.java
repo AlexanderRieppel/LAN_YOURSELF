@@ -175,7 +175,12 @@ public class Controller{
 			conf.readAll();
 			ArrayList<String> cont = conf.getConnections();
 			//File f = new File("hosts"+ File.separator + cont.get(0));
-			File f2 = new File("hosts"+ File.separator + (String)properties.get("Name"));
+			String[] p = properties.getProperty("path").split("\\");
+			String path ="";
+			for (int i = 0; i < p.length-1;i++){
+				path = path+p[i]+"\\";
+			}
+			File f2 = new File(path+"hosts"+ File.separator + (String)properties.get("Name"));
 			if(f2.exists()){
 				CLI2.start();
 				for(int i = 0 ; i  < cont.size(); i++){

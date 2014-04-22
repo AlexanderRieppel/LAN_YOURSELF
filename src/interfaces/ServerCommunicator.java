@@ -27,7 +27,7 @@ class ServerCommunicator extends ServerInterface  {
 	@Override
 	public void open() throws IOException {
 		
-		ss = new ServerSocket(Integer.parseInt((String)properties.get("javaport")));//TODO Make dynamic
+		ss = new ServerSocket(Integer.parseInt((String)properties.get("javaport")));
 
 		go=true;
 	}
