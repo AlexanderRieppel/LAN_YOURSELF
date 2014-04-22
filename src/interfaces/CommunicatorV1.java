@@ -76,6 +76,11 @@ public class CommunicatorV1 implements Communicator {
 
 	@Override
 	public void sendMessage(LysMessage message) throws IOException {
+		if (message.getDest()==null){
+			for( RemoteClient rc : clientMap.values()){
+				rc.send(message);
+			}
+		}
 		clientMap.get(message.getDest()).send(message);
 		
 	}
