@@ -175,7 +175,7 @@ public class Controller{
 			conf.readAll();
 			ArrayList<String> cont = conf.getConnections();
 			//File f = new File("hosts"+ File.separator + cont.get(0));
-			String[] p = properties.getProperty("path").split("\\");
+			String[] p = properties.getProperty("path").split("\\\\");
 			String path ="";
 			for (int i = 0; i < p.length-1;i++){
 				path = path+p[i]+"\\";
@@ -185,7 +185,7 @@ public class Controller{
 				CLI2.start();
 				for(int i = 0 ; i  < cont.size(); i++){
 					if(!cont.get(i).equalsIgnoreCase((String)properties.get("Name"))){
-						ConfigEditor temp = new ConfigEditor("hosts"+ File.separator + cont.get(i));
+						ConfigEditor temp = new ConfigEditor(path+"hosts"+ File.separator + cont.get(i));
 						String sub = temp.get("Subnet").split("/")[0];
 						if(port == -1)
 							port = Integer.parseInt((String)properties.get("Port"))+1;
