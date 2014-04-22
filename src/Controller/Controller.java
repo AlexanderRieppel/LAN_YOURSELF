@@ -212,7 +212,7 @@ public class Controller{
 	public void sendNachricht(String txt){
 		try {
 			if(commu != null)
-				this.commu.sendMessage(CommunicationFactory.newMessage(	null, (String)properties.get("Name"), null,"Nachricht", txt));
+				this.commu.sendMessage(CommunicationFactory.newMessage(null,(String)properties.get("Name"), null,"Nachricht", txt));
 			mg.addMessage("Ich: " + txt);
 		} catch (IOException e) {
 			//TODO Auto-generated catch block
