@@ -6,10 +6,13 @@ import Controller.Controller;
 import Controller.User;
 
 import java.awt.BorderLayout;
+import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -17,6 +20,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+import org.apache.log4j.Logger;
+import org.apache.log4j.PatternLayout;
 
 public class MainPanel extends JPanel{
 	private Controller contoroller;
@@ -24,6 +32,7 @@ public class MainPanel extends JPanel{
 	private JTextField userinput;
 	private JButton send;
 	private JTextArea messages;
+	private Logger chat = Logger.getLogger("Chat");
 	
 	public MainPanel(Controller con){
 		this.contoroller = con;
@@ -34,7 +43,21 @@ public class MainPanel extends JPanel{
 		send = new JButton();
 		messages = new JTextArea();
 		
+		ChatAppander app = new ChatAppander(messages);
+		app.setLayout(new PatternLayout("%d{yyyy-MM-dd HH:mm:ss} => %m%n" ));
+		chat.addAppender(app);
+		
 		send.setText("Senden");
+		
+		userlist.addMouseListener(new MouseAdapter() {
+		    public void mouseClicked(MouseEvent evt) {
+		        JList list = (JList)evt.getSource();
+		        if (evt.getClickCount() >= 2) {
+		        	new ListItem((User)list.getSelectedValue(),Controller.frame.getX() + Controller.frame.getWidth()+10, Controller.frame.getY());
+		        }
+		    }
+		});
+		
 		
 		JPanel p1 = new JPanel();
 		p1.setLayout(new BorderLayout(0,0));
@@ -78,7 +101,7 @@ public class MainPanel extends JPanel{
 	}
 	
 	public void addMessage(String nmsg){
-		messages.setText(messages.getText() + nmsg + "\n");
+		chat.info(nmsg);
 	}
 	
 	public void setListData(Vector<User> v){

@@ -21,13 +21,13 @@ class ServerCommunicator extends ServerInterface  {
 		this.messageQueue = messageQueue;
 		observer = new ArrayList<HashMap<String, RemoteClient>>();
 		this.localeNodeName=localeNodeName;
-		
+		this.properties = p;
 	}
 
 	@Override
 	public void open() throws IOException {
 		
-		ss = new ServerSocket(Integer.parseInt(properties.getProperty("javaport")));//TODO Make dynamic
+		ss = new ServerSocket(Integer.parseInt((String)properties.get("javaport")));//TODO Make dynamic
 
 		go=true;
 	}
