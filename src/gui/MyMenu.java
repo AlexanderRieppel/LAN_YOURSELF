@@ -9,6 +9,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import Controller.CLI2;
 import Controller.Controller;
 import Controller.MyLogger;
 
@@ -50,7 +51,7 @@ public class MyMenu extends JMenuBar{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				MyLogger.log("Aktion bei " + e.getSource().getClass().getSimpleName() + " Trennen");
-				
+				CLI2.stop();
 			}
 		});
 		

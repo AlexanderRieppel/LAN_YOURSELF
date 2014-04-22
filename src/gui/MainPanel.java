@@ -110,6 +110,6 @@ public class MainPanel extends JPanel{
 	private void buttonklick(){
 		String msg = userinput.getText();
 		userinput.setText("");
-		addMessage(msg);
+		this.contoroller.sendNachricht(msg);
 	}
 }

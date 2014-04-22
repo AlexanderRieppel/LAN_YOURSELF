@@ -45,19 +45,32 @@ public class Reciever implements Runnable{
 					
 				}
 				if(text.equalsIgnoreCase("Nachricht")){
-	
-				}
-				if(text.equalsIgnoreCase("Ich bin")){
-					
+					String txt = (String)msg.getLoad();
+					this.c.resNachricht(msg.getSource() + ": " + txt);
 				}
 				if(text.equalsIgnoreCase("Den gibts")){
-					
+					User u = (User)msg.getLoad();
+					File f = new File("hosts" + File.separator + name);
+					if(f.exists())
+						f.delete();
+					f.createNewFile();
+					FileOutputStream fos = new FileOutputStream(f);
+					fos.write(u.getHost());
+					fos.close();
+					this.c.addUser(u);
+					ConfigEditor conf = new ConfigEditor("tinc.conf");
+					conf.readAll();
+					conf.addConection(u.getName());
+					conf.writeAll();CLI2.restart();
 				}
 				
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NoSuchFile e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -77,10 +90,15 @@ public class Reciever implements Runnable{
 				MyLogger.log("Senden von: " + hh[i]);
 				ConfigEditor conf = new ConfigEditor("hosts" + File.separator + hh[i]);
 				User u = new User(hh[i], conf.get("Subnet").split("/")[0],conf.getContent().getBytes());
+				this.c.getCommu().sendMessage(CommunicationFactory.newMessage(	hh[i], (String)this.c.properties.get("Name"), null,"Den gibts", u));
 			}
 		}
 		}catch(NoSuchFile e){
-			
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }

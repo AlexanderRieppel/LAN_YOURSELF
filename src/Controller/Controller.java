@@ -42,6 +42,7 @@ public class Controller{
 	private Vector<User> v = new Vector<User>();
 	private String propertiespath;
 	private int port = -1;
+	private MainPanel mg;
 	
 	public String publicIP;
 	public Properties properties;
@@ -97,7 +98,7 @@ public class Controller{
 		l.info("Name lautet: " + name);
 		
 		l.info("Starte GUI...");
-		MainPanel mg = new MainPanel(this);
+		mg = new MainPanel(this);
 		mg.setListData(v);
 		
 		MyMenu m = new MyMenu(this);
@@ -204,6 +205,19 @@ public class Controller{
 	}
 	public void addUser(User u){
 		v.add(u);
+	}
+	public void resNachricht(String txt){
+		mg.addMessage(txt);
+	}
+	public void sendNachricht(String txt){
+		try {
+			if(commu != null)
+				this.commu.sendMessage(CommunicationFactory.newMessage(	null, (String)properties.get("Name"), null,"Nachricht", txt));
+			mg.addMessage("Ich: " + txt);
+		} catch (IOException e) {
+			//TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	public void shutdown(){
 		try {

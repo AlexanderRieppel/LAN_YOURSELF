@@ -89,6 +89,9 @@ public class ConfigEditor {
 			this.content = "ConnectTo = " + temp + "\n" + this.content; 
 		}
 	}
+	public void addConection(String neu){
+		this.content = "ConnectTo = " + neu + "\n" + this.content; 
+	}
 	public void removeConections(ArrayList<String> rem){
 		for(String temp : rem){
 			if(this.content.contains(temp)){

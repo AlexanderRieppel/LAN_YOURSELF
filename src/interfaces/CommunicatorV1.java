@@ -80,8 +80,8 @@ public class CommunicatorV1 implements Communicator {
 			for( RemoteClient rc : clientMap.values()){
 				rc.send(message);
 			}
-		}
-		clientMap.get(message.getDest()).send(message);
+		}else
+			clientMap.get(message.getDest()).send(message);
 		
 	}
 	/**
